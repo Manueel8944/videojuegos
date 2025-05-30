@@ -53,30 +53,30 @@ class Gestor {
 
     async registrarVideojuego (titulo, desarrollador, anoLanzamiento, genero, rating) {
 
-        await this.videojuegos.push(new Videojuego(titulo, desarrollador, parseInt(anoLanzamiento), genero, parseInt(rating)))
+        this.videojuegos[0].push(new Videojuego(titulo, desarrollador, parseInt(anoLanzamiento), genero, parseInt(rating)))
         console.log("Videojuego registrado con exito!")
 
     }
 
     async ordenarPor(campo){
 
-        for (let i = 0; i < (this.videojuegos.length - 1); i++){
-            for (let j = 0; j < (this.videojuegos.length - 1 - i); j++){
-                if (this.videojuegos[j][campo] > this.videojuegos[j+1][campo]){ 
-                    let aux = this.videojuegos[j];
-                    this.videojuegos[j] = this.videojuegos[j+1];
-                    this.videojuegos[j+1] = aux;
+        for (let i = 0; i < (this.videojuegos[0].length - 1); i++){
+            for (let j = 0; j < (this.videojuegos[0].length - 1 - i); j++){
+                if (this.videojuegos[0][j][campo] > this.videojuegos[0][j+1][campo]){ 
+                    let aux = this.videojuegos[0][j];
+                    this.videojuegos[0][j] = this.videojuegos[0][j+1];
+                    this.videojuegos[0][j+1] = aux;
                 }
             }
         }
 
-        console.table(this.videojuegos)
+        console.table(this.videojuegos[0])
     }
 
     async filtrarPor (campo, valor) {
-        for (let i = 0; i < this.videojuegos.length; i++){
-            if (this.videojuegos[i][campo] == valor){
-                console.log(`Titulo: ${this.videojuegos[i]["titulo"]} | Desarrollador: ${this.videojuegos[i]["desarrollador"]} | Año de lanzamiento: ${this.videojuegos[i]["anoLanzamiento"]} | Genero: ${this.videojuegos[i]["genero"]} | Rating: ${this.videojuegos[i]["rating"]} `)
+        for (let i = 0; i < this.videojuegos[0].length; i++){
+            if (this.videojuegos[0][i][campo] == valor){
+                console.log(`Titulo: ${this.videojuegos[0][i]["titulo"]} | Desarrollador: ${this.videojuegos[0][i]["desarrollador"]} | Año de lanzamiento: ${this.videojuegos[0][i]["anoLanzamiento"]} | Genero: ${this.videojuegos[0][i]["genero"]} | Rating: ${this.videojuegos[0][i]["rating"]} `)
             }
         }
     }
@@ -91,12 +91,44 @@ class Gestor {
     }
 
     async juegosRetro() {
-        for (let i = 0; i < this.videojuegos.length; i++){
-            if(this.esRetro(this.videojuegos[i])){
-                console.log(`Titulo: ${this.videojuegos[i]["titulo"]} | Desarrollador: ${this.videojuegos[i]["desarrollador"]} | Año de lanzamiento: ${this.videojuegos[i]["anoLanzamiento"]} | Genero: ${this.videojuegos[i]["genero"]} | Rating: ${this.videojuegos[i]["rating"]} `)
+        for (let i = 0; i < this.videojuegos[0].length; i++){
+            if(this.esRetro(this.videojuegos[0][i])){
+                console.log(`Titulo: ${this.videojuegos[0][i]["titulo"]} | Desarrollador: ${this.videojuegos[0][i]["desarrollador"]} | Año de lanzamiento: ${this.videojuegos[0][i]["anoLanzamiento"]} | Genero: ${this.videojuegos[0][i]["genero"]} | Rating: ${this.videojuegos[0][i]["rating"]} `)
             }
         }
     }
+
+    async registrarFavorito(titulo){
+        let encontrado = false
+        for(let i = 0; i < this.videojuegos[0].length; i++){
+            if(this.videojuegos[0][i]["titulo"] == titulo) {
+                encontrado = true
+                this.videojuegos[1].push(this.videojuegos[0][i])
+            }
+        }
+
+        if (!encontrado) {
+            console.error(`Error: no existe ${titulo} en los registros`)
+        }
+
+        else{
+            console.log("Videojuego registrado en favoritos con exito!")
+        }
+    }
+
+    listarJuegos(){
+        for (let i = 0; i < this.videojuegos[0].length; i++){
+                console.log(`Titulo: ${this.videojuegos[0][i]["titulo"]} | Desarrollador: ${this.videojuegos[0][i]["desarrollador"]} | Año de lanzamiento: ${this.videojuegos[0][i]["anoLanzamiento"]} | Genero: ${this.videojuegos[0][i]["genero"]} | Rating: ${this.videojuegos[0][i]["rating"]} `)
+        }
+    }
+
+    listarFavoritos(){
+        for (let i = 0; i < this.videojuegos[1].length; i++){
+                console.log(`Titulo: ${this.videojuegos[1][i]["titulo"]} | Desarrollador: ${this.videojuegos[1][i]["desarrollador"]} | Año de lanzamiento: ${this.videojuegos[1][i]["anoLanzamiento"]} | Genero: ${this.videojuegos[1][i]["genero"]} | Rating: ${this.videojuegos[1][i]["rating"]} `)
+        }
+    }
+
+
 }
 
 
@@ -105,7 +137,7 @@ async function menu () {
     const gestor = new Gestor()
     let menu = 0
 
-    while (menu != 5) { 
+    while (menu != 8) { 
 
         console.clear()
         console.log("\x1b[36m╔════════════════════════════════════╗\x1b[0m");
@@ -115,7 +147,10 @@ async function menu () {
         console.log("\x1b[36m║ \x1b[33m 2)\x1b[0m Ordenar por                 \x1b[36m   ║\x1b[0m");
         console.log("\x1b[36m║ \x1b[33m 3)\x1b[0m Filtrar por      \x1b[36m              ║\x1b[0m");
         console.log("\x1b[36m║ \x1b[33m 4)\x1b[0m Juegos retro     \x1b[36m              ║\x1b[0m");
-        console.log("\x1b[36m║ \x1b[33m 5)\x1b[0m Salir                        \x1b[36m  ║\x1b[0m");
+        console.log("\x1b[36m║ \x1b[33m 5)\x1b[0m Agregar juego a favoritos     \x1b[36m ║\x1b[0m");
+        console.log("\x1b[36m║ \x1b[33m 6)\x1b[0m Mostrar favoritos     \x1b[36m         ║\x1b[0m");
+        console.log("\x1b[36m║ \x1b[33m 7)\x1b[0m Mostrar todos los juegos     \x1b[36m  ║\x1b[0m");
+        console.log("\x1b[36m║ \x1b[33m 8)\x1b[0m Salir                        \x1b[36m  ║\x1b[0m");
         console.log("\x1b[36m╚════════════════════════════════════╝\x1b[0m");
 
         menu = parseInt(await preguntar("Elige una opción: "))
@@ -180,13 +215,53 @@ async function menu () {
                 
                 await gestor.leerdatos()
 
-                gestor.juegosRetro()
+                await gestor.juegosRetro()
 
                 pause = await preguntar("Pulse Enter para continuar...")
                 break;
             }
 
             case 5: {
+                console.clear()
+                console.log("=== Agregar juego a favoritos ===") 
+                
+                await gestor.leerdatos()
+
+                let titulo = await preguntar("Titulo del juego que quieras añadira a favoritos: ")
+
+                await gestor.registrarFavorito(titulo)
+
+                await gestor.escribirdatos()
+
+                pause = await preguntar("Pulse Enter para continuar...")
+                break;
+            }
+
+            case 6: {
+                console.clear()
+                console.log("=== Mostrar juegos favoritos ===") 
+                
+                await gestor.leerdatos()
+
+                await gestor.listarFavoritos()
+
+                pause = await preguntar("Pulse Enter para continuar...")
+                break;
+            }
+
+            case 7: {
+                console.clear()
+                console.log("=== Mostrar todos los juegos ===") 
+                
+                await gestor.leerdatos()
+
+                await gestor.listarJuegos()
+
+                pause = await preguntar("Pulse Enter para continuar...")
+                break;
+            }
+
+            case 8: {
                 console.clear()
                 console.log("=== Salir ===")
                 rl.close()

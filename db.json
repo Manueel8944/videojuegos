@@ -1,23 +1,34 @@
 [
-  {
-    "titulo": "valorant",
-    "desarrollador": "riot",
-    "anoLanzamiento": 2017,
-    "genero": "tactico",
-    "rating": 7
-  },
-  {
-    "titulo": "league of legends",
-    "desarrollador": "riot",
-    "anoLanzamiento": 2009,
-    "genero": "moba",
-    "rating": 9
-  },
-  {
-    "titulo": "minecraft",
-    "desarrollador": "mojang",
-    "anoLanzamiento": 2011,
-    "genero": "survival",
-    "rating": 9
-  }
+  [
+    {
+      "titulo": "valorant",
+      "desarrollador": "riot",
+      "anoLanzamiento": 2017,
+      "genero": "tactico",
+      "rating": 7
+    },
+    {
+      "titulo": "league of legends",
+      "desarrollador": "riot",
+      "anoLanzamiento": 2009,
+      "genero": "moba",
+      "rating": 9
+    },
+    {
+      "titulo": "minecraft",
+      "desarrollador": "mojang",
+      "anoLanzamiento": 2011,
+      "genero": "survival",
+      "rating": 9
+    }
+  ],
+  [
+    {
+      "titulo": "minecraft",
+      "desarrollador": "mojang",
+      "anoLanzamiento": 2011,
+      "genero": "survival",
+      "rating": 9
+    }
+  ]
 ]
