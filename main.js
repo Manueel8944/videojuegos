@@ -1,6 +1,5 @@
 const readline = require('readline');
 const fs = require('fs/promises');
-const { log } = require('console');
 
 let pause
 
